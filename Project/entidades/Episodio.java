@@ -9,15 +9,15 @@ import java.time.LocalDate;
 
 public class Episodio implements EntidadeArquivo {
 
-  private int id;                 // ID da série
-  private String nome;            // Nome da série
+  private int id;                   // ID da série
+  private String nome;              // Nome da série
   private short temporada;          // Número da temporada
   private LocalDate dataLancamento; // Data de lançamento
-  private int duracaoMinutos;     // Duração em minutos
-  private float avaliacao;      // Avaliação do episodio
-  private boolean especial; // Episodio especial?
-  private String descricao; // Descricao do episodio
-  private int id_serie; // ID da série
+  private int duracaoMinutos;       // Duração em minutos
+  private float avaliacao;          // Avaliação do episodio
+  private boolean especial;         // Episodio especial?
+  private String descricao;         // Descrição do episodio
+  private int id_serie;             // ID da série
   
   public Episodio() throws Exception{
     this("", 0, LocalDate.now(), 0, 0F, false, "", -1);
@@ -53,8 +53,10 @@ public class Episodio implements EntidadeArquivo {
       throw new Exception("Avaliação inválida");
     if(descricao.equals(""))
       throw new Exception("Descrição inválida");
+
+    //Deverá ser feito um metodo que verifica se existe uma serie com esse id
     if(id_serie < 0)
-      throw new Exception("ID da série inválida"); //Deverá ser feito um metodo que verifica se existe uma serie com esse id
+      throw new Exception("ID da série inválida"); 
   }
 
   public int getID(){
@@ -69,7 +71,7 @@ public class Episodio implements EntidadeArquivo {
     return this.id_serie;
   }
 
-  public void setID_serie(int id){
+  public void setID_serie(int id_serie){
     this.id_serie = id_serie;
   }
 
@@ -176,4 +178,8 @@ public class Episodio implements EntidadeArquivo {
 		return (this.getID() == ((Episodio) obj).getID());
 	}
 
+  // @Override
+  public int compareTo(Episodio outro) {
+      return Integer.compare(this.id, outro.id);
+  }
 }
