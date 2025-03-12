@@ -41,6 +41,10 @@ public class ParIdId implements aeds3.RegistroArvoreBMais<ParIdId> {
     }
   }
 
+  public int getId1(){
+    return this.id1;
+  }
+
   @Override
   public ParIdId clone() {
     return new ParIdId(this.id1, this.id2);
