@@ -135,4 +135,4 @@ public class ArquivoSeries extends Arquivo<Serie> {
         }
         return false;
     }
-}
+} 
