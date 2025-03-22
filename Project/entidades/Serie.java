@@ -141,7 +141,7 @@ public class Serie implements EntidadeArquivo {
                 "\nSinopse " + sinopse + 
                 "\nStreaming: " + streaming + 
                 "\nGênero: " + genero + 
-                "\nClassificação Indicativa: " + classIndicativa + "]";
+                "\nClassificação Indicativa: " + classIndicativa + "]"; 
     }
 
     @Override
