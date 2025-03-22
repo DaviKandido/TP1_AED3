@@ -132,7 +132,7 @@ public class MenuEpisodios {
     public void buscarEpisodio() {
         System.out.println("\nBusca de episódio por ID");
         System.out.print("\nID: ");
-        String id = console.nextLine();
+        int id = console.nextLine();
 
         try {
             Episodio episodio = arqEpisodios.read(id);
