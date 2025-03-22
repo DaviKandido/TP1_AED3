@@ -132,7 +132,7 @@ public class MenuEpisodios {
     public void buscarEpisodio() {
         System.out.println("\nBusca de episódio por ID");
         System.out.print("\nID: ");
-        int id = console.nextLine();
+        int id = console.nextInt();
 
         try {
             Episodio episodio = arqEpisodios.read(id);
@@ -149,7 +149,7 @@ public class MenuEpisodios {
     public void excluirEpisodio() {
         System.out.println("\nExclusão de episódio");
         System.out.print("\nID: ");
-        String id = console.nextLine();
+        int id = console.nextInt();
 
         try {
             Episodio episodio = arqEpisodios.read(id);
@@ -179,7 +179,7 @@ public class MenuEpisodios {
     public void alterarEpisodio() {
         System.out.println("\nAlteração de episódio");
         System.out.print("ID do episódio: ");
-        int id = Integer.parseInt(console.nextLine());
+        int id = console.nextInt();
 
         try {
             Episodio episodio = arqEpisodios.read(id);
@@ -190,13 +190,13 @@ public class MenuEpisodios {
                 System.out.print("Novo título (deixe em branco para manter o anterior): ");
                 String novoTitulo = console.nextLine();
                 if (!novoTitulo.isEmpty()) {
-                    episodio.setTitulo(novoTitulo);
+                    episodio.setNome(novoTitulo);
                 }
 
                 System.out.print("Nova duração em minutos (deixe em branco para manter o anterior): ");
                 String novaDuracao = console.nextLine();
                 if (!novaDuracao.isEmpty()) {
-                    episodio.setDuracao(Integer.parseInt(novaDuracao));
+                    episodio.setDuracaoMinutos(Integer.parseInt(novaDuracao));
                 }
 
                 System.out.print("Nova data de lançamento (DD/MM/AAAA) (deixe em branco para manter a anterior): ");
@@ -231,10 +231,10 @@ public class MenuEpisodios {
     public void mostraEpisodio(Episodio episodio) {
         if (episodio != null) {
             System.out.println("----------------------");
-            System.out.printf("ID.........: %s%n", episodio.getId());
-            System.out.printf("Título.....: %s%n", episodio.getTitulo());
+            System.out.printf("ID.........: $s%n" + episodio.getID());
+            System.out.printf("Título.....: %s%n", episodio.getNome());
             System.out.printf("Temporada..: %d%n", episodio.getTemporada());
-            System.out.printf("Número.....: %d%n", episodio.getNumero());
+            System.out.printf("Número da Serie.....: %d%n", episodio.getID_serie());
             System.out.printf("Lançamento.: %s%n", episodio.getDataLancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             System.out.println("----------------------");
         }
