@@ -35,8 +35,6 @@ public class Serie implements EntidadeArquivo {
         this.genero = genero;
         this.classIndicativa = classIndicativa;
 
-        if(id < 0)
-            throw new Exception("ID inválido");
         if(nome.equals(""))
             throw new Exception("Nome inválido");
         if(anoLancamento == null)
