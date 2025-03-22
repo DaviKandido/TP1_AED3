@@ -19,7 +19,7 @@ public class Serie implements EntidadeArquivo {
     private String classIndicativa;
 
     public Serie() throws Exception  {
-        this(-1, "", LocalDate.now(),"","", "", "");
+        this("", LocalDate.now(),"","", "", "");
     }
 
     public Serie(String nome, LocalDate anoLancamento, String sinopse, String streaming, String genero, String classIndicativa) throws Exception {
@@ -34,19 +34,6 @@ public class Serie implements EntidadeArquivo {
         this.streaming = streaming;
         this.genero = genero;
         this.classIndicativa = classIndicativa;
-
-        if(nome.equals(""))
-            throw new Exception("Nome inválido");
-        if(anoLancamento == null)
-            throw new Exception("Ano de lançamento inválida");
-        if(sinopse.equals(""))
-            throw new Exception("Sinopse inválida");
-        if(streaming.equals(""))
-            throw new Exception("Streaming inválida");
-        if(genero.equals(""))
-            throw new Exception("Genero inválida");
-        if(classIndicativa.equals(""))
-        throw new Exception("Classificação Indicativa inválida");
 
     } 
 
@@ -141,11 +128,15 @@ public class Serie implements EntidadeArquivo {
                 "\nSinopse " + sinopse + 
                 "\nStreaming: " + streaming + 
                 "\nGênero: " + genero + 
-                "\nClassificação Indicativa: " + classIndicativa + "]"; 
+                "\nClassificação Indicativa: " + classIndicativa + "]";
     }
 
     @Override
  	public boolean equals(Object obj){
  		return (this.getID() == ((Serie) obj).getID());
  	}
+
+  public int compareTo(Serie serie) {
+    return Integer.compare(this.id, serie.id);
+    }
 }
