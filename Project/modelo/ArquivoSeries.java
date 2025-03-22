@@ -35,8 +35,7 @@ public class ArquivoSeries extends Arquivo<Serie> {
         indiceNomeSerie.create(new ParNomeSerieId(s.getNome(), id));
         return id;
     }
-
-    /* 
+ 
     public Serie readNome(String nome) throws Exception {
 
         if(nome.length()==0)
@@ -48,8 +47,7 @@ public class ArquivoSeries extends Arquivo<Serie> {
         else 
             return null;
     }
-    */
-    
+
     public Serie[] readNomeSerie(String nome) throws Exception {
         if(nome.length()==0)
             return null;
