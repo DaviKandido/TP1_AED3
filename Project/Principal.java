@@ -36,7 +36,7 @@ public class Principal {
                         break;
                     case 9:
                         (new MenuSeries()).povoar();
-                        //(new MenuEpisodios()).povoar();
+                        (new MenuEpisodios()).povoar();
                         break;
                     case 0:
                         break;

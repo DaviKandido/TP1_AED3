@@ -117,7 +117,7 @@ public class MenuEpisodios {
         dadosCorretos = false;
         do {
             System.out.print("Avaliação do episodio (0-10): ");
-            if (console.hasNextFloat()) {
+            if (console.hasNextFloat() || console.hasNextInt()) {
                 avaliacao = console.nextFloat();
                 dadosCorretos = true;
             }
@@ -137,8 +137,9 @@ public class MenuEpisodios {
             console.nextLine();
         } while(!dadosCorretos);
 
+        dadosCorretos = false;
         do {
-            System.out.print("Descrição do espisodio: ");
+            System.out.print("Descrição do espisodio (min. de 10 letras): ");
             descricao = console.nextLine();
             if(descricao.length()>=10)
                 dadosCorretos = true;
@@ -163,8 +164,8 @@ public class MenuEpisodios {
                 Episodio e = new Episodio(nome, temporada, dataLancamento, duracaoMinutos, avaliacao, especial, descricao, id_serie);
                 arqEpisodios.create(e);
                 System.out.println("Episódio incluído com sucesso.");
-            } catch(Exception ex) {
-                System.out.println("Erro do sistema. Não foi possível incluir o episódio!");
+            } catch(Exception e) {
+                System.out.println("Erro do sistema. Não foi possível incluir o episódio! " + e.getMessage());
             }
         }
     }
@@ -173,6 +174,7 @@ public class MenuEpisodios {
         System.out.println("\nBusca de episódio por ID");
         System.out.print("\nID: ");
         int id = console.nextInt();
+        console.nextLine();
 
         try {
             Episodio episodio = arqEpisodios.read(id);
@@ -182,7 +184,7 @@ public class MenuEpisodios {
                 System.out.println("Episódio não encontrado.");
             }
         } catch(Exception e) {
-            System.out.println("Erro do sistema. Não foi possível buscar o episódio!");
+            System.out.println("Erro do sistema. Não foi possível buscar o episódio!" + e.getMessage());
         }
     }
 
@@ -212,7 +214,7 @@ public class MenuEpisodios {
                 System.out.println("Episódio não encontrado.");
             }
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível excluir o episódio!");
+            System.out.println("Erro do sistema. Não foi possível excluir o episódio! " + e.getMessage());
         }
     }
 
@@ -263,7 +265,7 @@ public class MenuEpisodios {
                 System.out.println("Episódio não encontrado.");
             }
         } catch (Exception e) {
-            System.out.println("Erro do sistema. Não foi possível alterar o episódio!");
+            System.out.println("Erro do sistema. Não foi possível alterar o episódio! " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -271,11 +273,15 @@ public class MenuEpisodios {
     public void mostraEpisodio(Episodio episodio) {
         if (episodio != null) {
             System.out.println("----------------------");
-            System.out.printf("ID.........: $s%n" + episodio.getID());
-            System.out.printf("Título.....: %s%n", episodio.getNome());
+            System.out.printf("ID.........: %d%n", episodio.getID());
+            System.out.printf("Nome.......: %s%n", episodio.getNome());
             System.out.printf("Temporada..: %d%n", episodio.getTemporada());
-            System.out.printf("Número da Serie.....: %d%n", episodio.getID_serie());
             System.out.printf("Lançamento.: %s%n", episodio.getDataLancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            System.out.printf("Duração....: %d%n", episodio.getDuracaoMinutos());
+            System.out.printf("Avaliação..: %s%n", episodio.getAvaliacao());
+            System.out.printf("Especial...: %s%n", episodio.isEspecial() ? "Sim" : "Nao");
+            System.out.printf("Descrição..: %s%n", episodio.getDescricao());
+            System.out.printf("Serie......: %d%n", episodio.getID_serie());
             System.out.println("----------------------");
         }
     }

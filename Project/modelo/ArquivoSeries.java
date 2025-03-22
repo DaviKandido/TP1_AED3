@@ -1,10 +1,8 @@
 
 package modelo;
-import entidades.Serie;
-
-import java.util.ArrayList;
-
 import aeds3.*;
+import entidades.Serie;
+import java.util.ArrayList;
 
 public class ArquivoSeries extends Arquivo<Serie> {
     
@@ -46,11 +44,18 @@ public class ArquivoSeries extends Arquivo<Serie> {
 
     @Override
     public boolean delete(int id) throws Exception {
+        ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
+
         Serie s = read(id);   // na superclasse
         if(s!=null) {
-            if(super.delete(id))
+            boolean deletados = arqEpisodios.deleteEpisodioSerie(id);
+            
+            if(deletados && super.delete(id)){
+                
                 return indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
+            }
         }
+        
         return false;
     }
 

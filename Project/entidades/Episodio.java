@@ -123,6 +123,7 @@ public class Episodio implements EntidadeArquivo {
     dos.writeFloat(avaliacao);
     dos.writeBoolean(especial);
     dos.writeUTF(descricao);
+    dos.writeInt(id_serie);
 
     return baos.toByteArray();
   }
@@ -139,6 +140,7 @@ public class Episodio implements EntidadeArquivo {
     avaliacao = dis.readFloat();
     especial = dis.readBoolean();
     descricao = dis.readUTF();
+    id_serie = dis.readInt();
   }
 
   public String toString(){
@@ -149,7 +151,8 @@ public class Episodio implements EntidadeArquivo {
             "\nDuração: " + duracaoMinutos + 
             "\nAvaliação: " + avaliacao + 
             "\nEspecial: " + especial + 
-            "\nDescrição: " + descricao + "]";
+            "\nDescrição: " + descricao + 
+            "\nSerie: " + id_serie +  "]";
   }
 
 

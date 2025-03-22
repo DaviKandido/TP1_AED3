@@ -34,12 +34,12 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
     // **A ser implementado na classe serie**
 
     if(ArquivoSeries.serieExiste(e.getID_serie()) == false){
-      throw new Exception("Episodio nao pode ser criado pois a serie vinculada não existe");
+      throw new Exception("Episodio não pode ser criado pois a serie vinculada não existe");
     }
 
     int id = super.create(e);
     
-    indiceIdEpisodio_IdSerie.create(new ParIdId(e.getID_serie(), id));
+    indiceIdEpisodio_IdSerie.create(new ParIdId(e.getID_serie() , id));
     indiceNomeEpisodio.create(new ParTituloId(e.getNome(), id));
 
     return id;
@@ -65,6 +65,7 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
     
     // Metodo para verificar se a serie vinculada ao episodio existe ordem id_serie -1 é ao contrario?
     ArrayList<ParIdId> pIds = indiceIdEpisodio_IdSerie.read(new ParIdId(id_serie, -1));
+  
     if(pIds.size() > 0){
       Episodio[] episodios = new Episodio[pIds.size()];
       int i = 0;
@@ -93,6 +94,9 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
 
     // Metodo para verificar se a serie vinculada ao episodio existe ordem id_serie -1 é ao contrario?
     ArrayList<ParIdId> pIds = indiceIdEpisodio_IdSerie.read(new ParIdId(id_serie, -1));
+
+    System.out.println("Quantidade de episódios da serie deletados: " + pIds.size());
+
     if(pIds.size() > 0){
       for(ParIdId pID : pIds)
         delete(pID.getId_agregado());

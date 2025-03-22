@@ -220,7 +220,7 @@ public class MenuSeries {
         try {
             Episodio[] episodios = arqEpisodios.readEpisodiosSerie(id);
             if (episodios != null && episodios.length > 0) {
-                System.out.print("Essa série possui episódios vinculados, deseja excluir mesmo assim? (S/N) ");
+                System.out.print("\nEssa série possui episódios vinculados, deseja excluir mesmo assim? (S/N) ");
                 char resposta = console.nextLine().charAt(0);
                 if (resposta != 'S' && resposta != 's') {
                     System.out.println("A série não foi excluída.");
