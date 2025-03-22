@@ -16,7 +16,7 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
 
     indiceIdEpisodio_IdSerie = new ArvoreBMais<>(
       ParIdId.class.getConstructor(),
-      1,
+      5,
       "./dados/"+nomeEntidade+"/indiceIdEpisodios_IdSerie.db"
     );
 

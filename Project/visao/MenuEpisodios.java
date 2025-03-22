@@ -58,30 +58,27 @@ public class MenuEpisodios {
 
     public void incluirEpisodio() {
         System.out.println("\nInclusão de Episódio");
-        String id = "";
-        String titulo = "";
+        String nome = "";
         int temporada = 0;
-        int numero = 0;
         LocalDate dataLancamento = null;
+        int duracaoMinutos = 0;
+        float avaliacao = 0F;
+        boolean especial = false;
+        String descricao = "";
+        int id_serie = 0;
+
         boolean dadosCorretos = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        dadosCorretos = false;
-        do {
-            System.out.print("ID do Episódio (deixe vazio para cancelar): ");
-            id = console.nextLine();
-            if(id.length()==0) return;            
-            dadosCorretos = true;
-        } while(!dadosCorretos);
 
         dadosCorretos = false;
         do {
-            System.out.print("Título (min. de 4 letras): ");
-            titulo = console.nextLine();
-            if(titulo.length()>=4)
+            System.out.print("Nome do episodio (min. de 4 letras): ");
+            nome = console.nextLine();
+            if(nome.length()>=4)
                 dadosCorretos = true;
             else
-                System.err.println("O título do episódio deve ter no mínimo 4 caracteres.");
+                System.err.println("O Nome do episódio deve ter no mínimo 4 caracteres.");
         } while(!dadosCorretos);
 
         dadosCorretos = false;
@@ -89,16 +86,6 @@ public class MenuEpisodios {
             System.out.print("Temporada: ");
             if (console.hasNextInt()) {
                 temporada = console.nextInt();
-                dadosCorretos = true;
-            }
-            console.nextLine();
-        } while(!dadosCorretos);
-
-        dadosCorretos = false;
-        do {
-            System.out.print("Número do episódio: ");
-            if (console.hasNextInt()) {
-                numero = console.nextInt();
                 dadosCorretos = true;
             }
             console.nextLine();
@@ -116,11 +103,65 @@ public class MenuEpisodios {
             }
         } while(!dadosCorretos);
 
+        
+        dadosCorretos = false;
+        do {
+            System.out.print("Duração em minutos (0-999): ");
+            if (console.hasNextInt()) {
+                duracaoMinutos = console.nextInt();
+                dadosCorretos = true;
+            }
+            console.nextLine();
+        } while(!dadosCorretos);
+
+        dadosCorretos = false;
+        do {
+            System.out.print("Avaliação do episodio (0-10): ");
+            if (console.hasNextFloat()) {
+                avaliacao = console.nextFloat();
+                dadosCorretos = true;
+            }
+            console.nextLine();
+        } while(!dadosCorretos);
+
+        dadosCorretos = false;
+        do {
+            System.out.print("O episodio é especial? (S/N) ");
+            char resp = console.nextLine().charAt(0);
+            if (resp == 'S' || resp == 's' || resp == 'N' || resp == 'n') {
+                especial = (resp == 'S' || resp == 's');
+                avaliacao = console.nextFloat();
+                dadosCorretos = true;
+            }else{
+                System.err.println("Resposta inválida! Use S ou N.");
+            }
+            console.nextLine();
+        } while(!dadosCorretos);
+
+        do {
+            System.out.print("Descrição do espisodio: ");
+            descricao = console.nextLine();
+            if(descricao.length()>=10)
+                dadosCorretos = true;
+            else
+                System.err.println("A descricao do episódio deve ter no mínimo 10 caracteres.");
+        } while(!dadosCorretos);
+
+        dadosCorretos = false;
+        do {
+            System.out.print("A qual serie esta vinculada este episodio? (ID):");
+            if (console.hasNextInt()) {
+                id_serie = console.nextInt();
+                dadosCorretos = true;
+            }
+            console.nextLine();
+        } while(!dadosCorretos);
+
         System.out.print("\nConfirma a inclusão do episódio? (S/N) ");
         char resp = console.nextLine().charAt(0);
         if(resp=='S' || resp=='s') {
             try {
-                Episodio e = new Episodio(id, titulo, temporada, numero, dataLancamento);
+                Episodio e = new Episodio(nome, temporada, dataLancamento, duracaoMinutos, avaliacao, especial, descricao, id_serie);
                 arqEpisodios.create(e);
                 System.out.println("Episódio incluído com sucesso.");
             } catch(Exception ex) {
