@@ -62,10 +62,14 @@ public class MenuSeries {
 
     public void incluirSerie() {
     System.out.println("\nInclusão de Série");
+    
     String nome = "";
-    int ano = 0;
+    LocalDate ano;
     String sinopse = "";
     String streaming = "";
+    String genero = " ";
+    String classind = " ";
+
     boolean dadosCorretos = false;
     int anoAtual = LocalDate.now().getYear();
 
@@ -80,13 +84,38 @@ public class MenuSeries {
         }
     } while (!dadosCorretos);
 
+
+     do {
+        System.out.print("genero da série (min. 4 letras): ");
+        genero = console.nextLine();
+        if (nome.length() >= 4) {
+            dadosCorretos = true;
+        } else {
+            System.err.println("O genero da série deve ter no mínimo 4 caracteres.");
+        }
+    } while (!dadosCorretos);
+
+    do {
+        System.out.print("classificação indicada da série (min. 2 letras): ");
+        genero = console.nextLine();
+        if (classind.length() >= 2) {
+            dadosCorretos = true;
+        } else {
+            System.err.println("A classificação indicada da série deve ter no mínimo 2 caracteres.");
+        }
+    } while (!dadosCorretos);
+
+
     // Validação do ano de lançamento
     dadosCorretos = false;
     do {
         System.out.print("Ano de lançamento (entre 1900 e " + anoAtual + "): ");
         if (console.hasNextInt()) {
-            ano = console.nextInt();
-            if (ano >= 1900 && ano <= anoAtual) {
+            ano = LocalDate.parse(console.nextLine() + "-01-01" );
+
+            int anoDigitado = ano.getYear(); // Extrai o ano
+            if (anoDigitado >= 1900 && anoDigitado <= anoAtual)
+            {
                 dadosCorretos = true;
             } else {
                 System.err.println("Ano inválido! Insira um ano entre 1900 e " + anoAtual + ".");
@@ -126,7 +155,7 @@ public class MenuSeries {
     char resp = console.nextLine().charAt(0);
     if (resp == 'S' || resp == 's') {
         try {
-            Serie s = new Serie(nome, ano, sinopse, streaming);
+            Serie s = new Serie(-1, nome, ano, sinopse, streaming, genero, classind);
             arqSeries.create(s);
             System.out.println("Série incluída com sucesso.");
         } catch (Exception e) {
@@ -138,12 +167,12 @@ public class MenuSeries {
 
 
     public void buscarSerie() {
-        System.out.println("\nBusca de Série por Nome");
-        System.out.print("Nome: ");
-        String nome = console.nextLine();
+        System.out.println("\nBusca de Série por ID");
+        System.out.print("ID: ");
+        String id = console.nextInt();
 
         try {
-            Serie serie = arqSeries.read(nome);
+            Serie serie = arqSeries.read(id);
             if (serie != null) {
                 mostraSerie(serie);
             } else {
@@ -173,6 +202,12 @@ public class MenuSeries {
                     serie.setNome(novoNome);
                 }
                 
+                System.out.print("Novo ano de lançamento (ou Enter para manter): ");
+                LocalDate ano = LocalDate.parse(console.nextLine());
+                if (!ano.isEmpty()) {
+                    serie.setanoLancamento(ano);
+                }
+
                 System.out.print("Nova sinopse (ou Enter para manter): ");
                 String novaSinopse = console.nextLine();
                 if (!novaSinopse.isEmpty()) {
@@ -182,7 +217,19 @@ public class MenuSeries {
                 System.out.print("Novo streaming (ou Enter para manter): ");
                 String novoStreaming = console.nextLine();
                 if (!novoStreaming.isEmpty()) {
-                    serie.setAnoStreaming(novoStreaming);
+                    serie.seStreaming(novoStreaming);
+                }
+
+                System.out.print("Novo genero (ou Enter para manter): ");
+                String novogenero = console.nextLine();
+                if (!novoStreaming.isEmpty()) {
+                    serie.setGenero(novogenero);
+                }
+
+                System.out.print("Nova classificação indicada (ou Enter para manter): ");
+                String novoclassind = console.nextLine();
+                if (!novoclassind.isEmpty()) {
+                    serie.setClassIndicada(novoclassind);
                 }
                 
                 System.out.print("\nConfirma as alterações? (S/N) ");
@@ -258,7 +305,9 @@ public class MenuSeries {
             System.out.printf("Nome....: %s%n", serie.getNome());
             System.out.printf("Ano lançamento: %s%n", serie.getDataLancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             System.out.printf("Sinopse....: %s%n", serie.getSinopse());
-            System.out.printf("Streaming.....: %s%n", serie.getAnoStreaming());
+            System.out.printf("Streaming.....: %s%n", serie.getStreaming());
+            System.out.printf("Gênero.....: %s%n", serie.getGenero());
+            System.out.printf("Classificação indicada.....: %s%n", serie.getClassIndicada());
             System.out.println("----------------------");
         }
     }
