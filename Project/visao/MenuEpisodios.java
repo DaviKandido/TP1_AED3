@@ -130,7 +130,6 @@ public class MenuEpisodios {
             char resp = console.nextLine().charAt(0);
             if (resp == 'S' || resp == 's' || resp == 'N' || resp == 'n') {
                 especial = (resp == 'S' || resp == 's');
-                avaliacao = console.nextFloat();
                 dadosCorretos = true;
             }else{
                 System.err.println("Resposta inválida! Use S ou N.");
@@ -279,5 +278,41 @@ public class MenuEpisodios {
             System.out.printf("Lançamento.: %s%n", episodio.getDataLancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             System.out.println("----------------------");
         }
+    }
+
+    public void povoar() throws Exception {
+
+        // Serie de id 1
+        arqEpisodios.create(new Episodio( "Piloto",  1, LocalDate.of(2008, 1, 20), 58, 9.5f, false, "Walter White toma uma decisão que muda sua vida.", 1));
+        arqEpisodios.create(new Episodio( "Gato Sai do Saco", (short) 1, LocalDate.of(2008, 1, 27), 48, 8.7f, false, "As consequências da primeira venda aparecem.", 1));
+
+        // Serie de id 2
+        arqEpisodios.create(new Episodio( "Desaparecimento de Will", 1, LocalDate.of(2016, 7, 15), 47, 8.9f, false, "Will desaparece misteriosamente.", 2));
+        arqEpisodios.create(new Episodio( "Estranha da Maple Street", 1, LocalDate.of(2016, 7, 15), 55, 9.1f, false, "Mike e seus amigos encontram uma garota misteriosa.", 2));
+
+        // Serie de id 3
+        arqEpisodios.create(new Episodio( "Winter is Coming", 1, LocalDate.of(2011, 4, 17), 61, 9.0f, false, "Os Stark recebem o rei Robert Baratheon.", 3));
+
+        // Serie de id 4
+        arqEpisodios.create(new Episodio( "Princípio do Fim", 1, LocalDate.of(2019, 12, 20), 60, 8.5f, false, "Geralt enfrenta sua primeira batalha.", 4));
+        arqEpisodios.create(new Episodio( "Quatro Marcas", 1, LocalDate.of(2019, 12, 20), 59, 8.7f, false, "Yennefer descobre seu verdadeiro poder.", 4));
+
+        // Serie de id 5
+        arqEpisodios.create(new Episodio( "A Chegada", 1, LocalDate.of(2019, 7, 26), 60, 9.0f, false, "Billy Butcher apresenta Hughie aos The Boys.", 5));
+
+        // Serie de id 6
+        arqEpisodios.create(new Episodio( "Segredos", 1, LocalDate.of(2017, 12, 1), 53, 8.9f, false, "Jonas começa a desvendar os mistérios de Winden.", 6));
+
+        // Serie de id 7
+        arqEpisodios.create(new Episodio( "Apostando Alto", 1, LocalDate.of(2013, 9, 12), 55, 9.2f, false, "Tommy Shelby expande seu império.", 7));
+
+        // Serie de id 8
+        arqEpisodios.create(new Episodio( "O Legado Targaryen", 1, LocalDate.of(2022, 8, 21), 66, 8.7f, false, "Rei Viserys enfrenta um dilema sucessório.", 8));
+
+        // Serie de id 9
+        arqEpisodios.create(new Episodio( "Renascimento", 1, LocalDate.of(2016, 10, 2), 57, 9.0f, false, "Os anfitriões começam a questionar sua realidade.", 9));
+        
+        // Serie de id 10
+        arqEpisodios.create(new Episodio( "Volto Já", 1, LocalDate.of(2011, 12, 4), 44, 8.6f, false, "Uma mulher tenta reviver seu namorado morto usando IA.", 10));
     }
 }

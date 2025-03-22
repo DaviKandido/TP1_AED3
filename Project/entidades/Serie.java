@@ -1,12 +1,11 @@
 package entidades;
 
+import aeds3.EntidadeArquivo;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.time.LocalDate;
-
-import aeds3.EntidadeArquivo;
 
 public class Serie implements EntidadeArquivo {
 
@@ -35,18 +34,18 @@ public class Serie implements EntidadeArquivo {
         this.genero = genero;
         this.classIndicativa = classIndicativa;
 
-        if(nome.equals(""))
-            throw new Exception("Nome inválido");
-        if(anoLancamento == null)
-            throw new Exception("Ano de lançamento inválida");
-        if(sinopse.equals(""))
-            throw new Exception("Sinopse inválida");
-        if(streaming.equals(""))
-            throw new Exception("Streaming inválida");
-        if(genero.equals(""))
-            throw new Exception("Genero inválida");
-        if(classIndicativa.equals(""))
-        throw new Exception("Classificação Indicativa inválida");
+        // if(nome.equals(""))
+        //     throw new Exception("Nome inválido");
+        // if(anoLancamento == null)
+        //     throw new Exception("Ano de lançamento inválida");
+        // if(sinopse.equals(""))
+        //     throw new Exception("Sinopse inválida");
+        // if(streaming.equals(""))
+        //     throw new Exception("Streaming inválida");
+        // if(genero.equals(""))
+        //     throw new Exception("Genero inválida");
+        // if(classIndicativa.equals(""))
+        // throw new Exception("Classificação Indicativa inválida");
 
     } 
 
