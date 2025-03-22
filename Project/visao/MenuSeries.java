@@ -1,13 +1,13 @@
 
 package visao;
 
+import entidades.Episodio;
+import entidades.Serie;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import entidades.Serie;
-import entidades.Episodio;
-import modelo.ArquivoSeries;
 import modelo.ArquivoEpisodios;
+import modelo.ArquivoSeries;
 
 public class MenuSeries {
     ArquivoSeries arqSeries = new ArquivoSeries();
