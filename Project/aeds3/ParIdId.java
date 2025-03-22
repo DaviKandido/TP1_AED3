@@ -41,8 +41,8 @@ public class ParIdId implements aeds3.RegistroArvoreBMais<ParIdId> {
     }
   }
 
-  public int getId1(){
-    return this.id1;
+  public int getId_agregado(){
+    return this.id2;
   }
 
   @Override

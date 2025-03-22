@@ -36,27 +36,7 @@ public class Episodio implements EntidadeArquivo {
     this.avaliacao = avaliacao;
     this.especial = especial;
     this.descricao = descricao;
-    this.id_serie = id_serie;
-
-
-    if(id < 0)
-      throw new Exception("ID inválido");
-    if(nome.equals(""))
-      throw new Exception("Nome inválido");
-    if(temporada < 0)
-      throw new Exception("Temporada inválida");
-    if(dataLancamento == null)
-      throw new Exception("Data de lançamento inválida");
-    if(duracaoMinutos < 0)
-      throw new Exception("Duração inválida");
-    if(avaliacao < 0)
-      throw new Exception("Avaliação inválida");
-    if(descricao.equals(""))
-      throw new Exception("Descrição inválida");
-
-    //Deverá ser feito um metodo que verifica se existe uma serie com esse id
-    if(id_serie < 0)
-      throw new Exception("ID da série inválida"); 
+    this.id_serie = id_serie; 
   }
 
   public int getID(){

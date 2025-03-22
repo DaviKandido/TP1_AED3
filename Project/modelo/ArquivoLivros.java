@@ -1,11 +1,10 @@
 package modelo;
+import aeds3.*;
 import entidades.Livro;
-
 import java.util.ArrayList;
 
-import aeds3.*;
-
 public class ArquivoLivros extends Arquivo<Livro> {
+    
     Arquivo<Livro> arqLivros;
     HashExtensivel<ParISBNID> indiceISBN;
     ArvoreBMais<ParTituloId> indiceTitulo;

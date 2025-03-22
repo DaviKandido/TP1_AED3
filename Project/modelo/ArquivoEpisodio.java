@@ -1,5 +1,6 @@
 package modelo;
 import entidades.Episodio;
+import modelo.ArquivoSeries;
 
 import java.util.ArrayList;
 
@@ -33,14 +34,15 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
   public int create(Episodio e) throws Exception{
 
     // Metodo para verificar se a serie vinculada ao episodio existe 
-    // **A ser implementado na classe episodio**
-    if(SerieExiste(e.getID_serie()) == false){
+    // **A ser implementado na classe serie**
+
+    if(serieExiste(e.getID_serie()) == false){
       throw new Exception("Episodio nao pode ser criado pois a serie vinculada não existe");
     }
 
     int id = super.create(e);
     
-    indiceIdEpisodio_IdSerie.create(new ParIdId(id, e.getID_serie()));
+    indiceIdEpisodio_IdSerie.create(new ParIdId(e.getID_serie(), id));
     indiceNomeEpisodio.create(new ParTituloId(e.getNome(), id));
 
     return id;
@@ -65,7 +67,7 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
   public Episodio[] readEpisodiosSerie(int id_serie) throws Exception{
     
     // Metodo para verificar se a serie vinculada ao episodio existe ordem id_serie -1 é ao contrario?
-    ArrayList<ParIdId> pIds = indiceIdEpisodio_IdSerie.read(new ParIdId(-1, id_serie));
+    ArrayList<ParIdId> pIds = indiceIdEpisodio_IdSerie.read(new ParIdId(id_serie, -1));
     if(pIds.size() > 0){
       Episodio[] episodios = new Episodio[pIds.size()];
       int i = 0;
@@ -73,7 +75,7 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
       // Tive que criar um metodo para pegar o id do episodio
       // pois o metodo read() da superclasse Arquivo não aceita perguntar kutova
       for(ParIdId pID : pIds)
-        episodios[i++] = read(pID.getId1());
+        episodios[i++] = read(pID.getId_agregado());
       return episodios;
     }else
       return null;
@@ -84,7 +86,7 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
     Episodio e = read(id);
     if(e != null){
       if(super.delete(id))
-        return indiceIdEpisodio_IdSerie.delete(new ParIdId(id, e.getID_serie())) 
+        return indiceIdEpisodio_IdSerie.delete(new ParIdId(e.getID_serie(), id)) 
             && indiceNomeEpisodio.delete(new ParTituloId(e.getNome(), id));
     }
     return false;
@@ -96,7 +98,7 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
     ArrayList<ParIdId> pIds = indiceIdEpisodio_IdSerie.read(new ParIdId(id_serie, -1));
     if(pIds.size() > 0){
       for(ParIdId pID : pIds)
-        delete(pID.getId1());
+        delete(pID.getId_agregado());
       return true;
     } 
     return false;
@@ -115,8 +117,8 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
         }
 
         if(e.getID_serie() != novoEpisodio.getID_serie()){
-          indiceIdEpisodio_IdSerie.delete(new ParIdId(e.getID(), e.getID_serie()));
-          indiceIdEpisodio_IdSerie.create(new ParIdId(e.getID(), novoEpisodio.getID_serie()));
+          indiceIdEpisodio_IdSerie.delete(new ParIdId(e.getID_serie(), e.getID()));
+          indiceIdEpisodio_IdSerie.create(new ParIdId(novoEpisodio.getID_serie(), e.getID()));
         }else {
           throw new Exception("Episodio não pode ser atualizado pois a serie vinculada não existe");
         }
