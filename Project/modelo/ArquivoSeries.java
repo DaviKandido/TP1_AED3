@@ -1,3 +1,4 @@
+
 package modelo;
 import entidades.Serie;
 
@@ -87,7 +88,7 @@ public class ArquivoSeries extends Arquivo<Serie> {
         ArrayList<ParIdId> ids = indices.read(new ParIdId(id, -1));
         if(ids!= null){
             //excluir todos os episodios
-            boolean deletados = arqEpisodios.deleteEpisodio(pii.getId());
+            boolean deletados = arqEpisodios.deleteEpisodioSerie(pii.getId());
             //deletar a serie
             if(deletados){
                 return delete(pii.getId());
