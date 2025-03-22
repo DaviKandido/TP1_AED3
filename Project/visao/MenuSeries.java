@@ -1,8 +1,8 @@
+
 package visao;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Scanner;
 import entidades.Serie;
 import entidades.Episodio;
@@ -10,8 +10,8 @@ import modelo.ArquivoSeries;
 import modelo.ArquivoEpisodios;
 
 public class MenuSeries {
-    ArquivoSeries arqSeries;
-    ArquivoEpisodios arqEpisodios;
+    ArquivoSeries arqSeries = new ArquivoSeries();
+    ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
     private static Scanner console = new Scanner(System.in);
 
     public MenuSeries() throws Exception {
@@ -19,7 +19,7 @@ public class MenuSeries {
         arqEpisodios = new ArquivoEpisodios();
     }
 
-    public void menu() {
+    public void menu() throws Exception{
         int opcao;
         do {
             System.out.println("\n\nPUCFlix 1.0");
@@ -64,7 +64,7 @@ public class MenuSeries {
     System.out.println("\nInclusão de Série");
     
     String nome = "";
-    LocalDate ano;
+    LocalDate ano = LocalDate.now();
     String sinopse = "";
     String streaming = "";
     String genero = " ";
@@ -169,7 +169,7 @@ public class MenuSeries {
     public void buscarSerie() {
         System.out.println("\nBusca de Série por ID");
         System.out.print("ID: ");
-        String id = console.nextInt();
+        int id = console.nextInt();
 
         try {
             Serie serie = arqSeries.read(id);
@@ -185,13 +185,13 @@ public class MenuSeries {
 
  
 
-  public void alterarSerie() {
+    public void alterarSerie() throws Exception {
         System.out.println("\nAlteração de Série");
         System.out.print("ID da série: ");
-        String id = console.nextLine();
+        int id = console.nextInt();
 
         try {
-            Serie serie = arqSeries.read(id);
+            Serie serie = arqSeries.read(id); 
             if (serie != null)
              {
                 mostraSerie(serie);
@@ -204,8 +204,8 @@ public class MenuSeries {
                 
                 System.out.print("Novo ano de lançamento (ou Enter para manter): ");
                 LocalDate ano = LocalDate.parse(console.nextLine());
-                if (!ano.isEmpty()) {
-                    serie.setanoLancamento(ano);
+                if (ano.lengthOfYear() == 0) {
+                    serie.setAnoLancamento(ano);
                 }
 
                 System.out.print("Nova sinopse (ou Enter para manter): ");
@@ -217,7 +217,7 @@ public class MenuSeries {
                 System.out.print("Novo streaming (ou Enter para manter): ");
                 String novoStreaming = console.nextLine();
                 if (!novoStreaming.isEmpty()) {
-                    serie.seStreaming(novoStreaming);
+                    serie.setStreaming(novoStreaming);
                 }
 
                 System.out.print("Novo genero (ou Enter para manter): ");
@@ -229,7 +229,7 @@ public class MenuSeries {
                 System.out.print("Nova classificação indicada (ou Enter para manter): ");
                 String novoclassind = console.nextLine();
                 if (!novoclassind.isEmpty()) {
-                    serie.setClassIndicada(novoclassind);
+                    serie.setClassIndicativa(novoclassind);
                 }
                 
                 System.out.print("\nConfirma as alterações? (S/N) ");
@@ -253,23 +253,23 @@ public class MenuSeries {
         }
     }
    
-    public void excluirSerie() {
+    public void excluirSerie() throws Exception{
         System.out.println("\nExclusão de Série");
         System.out.print("ID: ");
-        String id = console.nextLine();
+        int id = console.nextInt();
         System.out.print("Nome: ");
         String nome = console.nextLine();
 
         try {
-            List<Episodio> episodios = arqEpisodios.readEpisodiosSerie(id);
-            if (!episodios.isEmpty())
+            Episodio[] episodios = arqEpisodios.readEpisodiosSerie(id);
+            if (episodios != null)
             {
                 System.out.print("Essa série possui episódios vinculados, você deseja excluir mesmo assim? (S/N)");
                 char resposta = console.nextLine().charAt(0);
 
                 if(resposta == 's' || resposta == 'S')
                 {
-                    boolean excluido = arqSeries.delete(id);
+                    boolean excluido = arqSeries.delete(nome,id);
                     if (excluido) {
                         System.out.println("Série excluída com sucesso.");
                     } else {
@@ -303,11 +303,11 @@ public class MenuSeries {
         if (serie != null) {
             System.out.println("----------------------");
             System.out.printf("Nome....: %s%n", serie.getNome());
-            System.out.printf("Ano lançamento: %s%n", serie.getDataLancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            System.out.printf("Ano lançamento: %s%n", serie.getAnoLancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             System.out.printf("Sinopse....: %s%n", serie.getSinopse());
             System.out.printf("Streaming.....: %s%n", serie.getStreaming());
             System.out.printf("Gênero.....: %s%n", serie.getGenero());
-            System.out.printf("Classificação indicada.....: %s%n", serie.getClassIndicada());
+            System.out.printf("Classificação indicada.....: %s%n", serie.getClassIndicativa());
             System.out.println("----------------------");
         }
     }
