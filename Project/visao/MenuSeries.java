@@ -98,7 +98,7 @@ public class MenuSeries {
     do {
         System.out.print("classificação indicada da série (min. 2 letras): ");
         genero = console.nextLine();
-        if (classind.length() >= 2) {
+        if (classind.length() >= 1) {
             dadosCorretos = true;
         } else {
             System.err.println("A classificação indicada da série deve ter no mínimo 2 caracteres.");
@@ -110,7 +110,7 @@ public class MenuSeries {
     dadosCorretos = false;
     do {
         System.out.print("Ano de lançamento (entre 1900 e " + anoAtual + "): ");
-        if (console.hasNextInt()) {
+ 
             ano = LocalDate.parse(console.nextLine() + "-01-01" );
 
             int anoDigitado = ano.getYear(); // Extrai o ano
@@ -120,12 +120,9 @@ public class MenuSeries {
             } else {
                 System.err.println("Ano inválido! Insira um ano entre 1900 e " + anoAtual + ".");
             }
-        } else {
-            System.err.println("Entrada inválida! Insira um ano numérico.");
-            console.next(); // Descartar entrada inválida
-        }
+         
     } while (!dadosCorretos);
-    console.nextLine(); // Limpar o buffer
+    
 
     // Validação da sinopse
     dadosCorretos = false;
@@ -155,7 +152,7 @@ public class MenuSeries {
     char resp = console.nextLine().charAt(0);
     if (resp == 'S' || resp == 's') {
         try {
-            Serie s = new Serie(-1, nome, ano, sinopse, streaming, genero, classind);
+            Serie s = new Serie(nome, ano, sinopse, streaming, genero, classind);
             arqSeries.create(s);
             System.out.println("Série incluída com sucesso.");
         } catch (Exception e) {
