@@ -41,8 +41,6 @@ public class Serie implements EntidadeArquivo {
             throw new Exception("Ano de lançamento inválida");
         if(sinopse.equals(""))
             throw new Exception("Sinopse inválida");
-        if(sinopse.equals(""))
-            throw new Exception("Sinopse inválida");
         if(streaming.equals(""))
             throw new Exception("Streaming inválida");
         if(genero.equals(""))
@@ -100,11 +98,11 @@ public class Serie implements EntidadeArquivo {
         this.genero = genero;
     }
 
-    public String getclassIndicativa() {
+    public String getClassIndicativa() {
         return classIndicativa;
     }
 
-    public void setclassIndicativa(String classIndicativa) {
+    public void setClassIndicativa(String classIndicativa) {
         this.classIndicativa = classIndicativa;
     }
 
