@@ -36,6 +36,7 @@ public class ArquivoSeries extends Arquivo<Serie> {
         return id;
     }
 
+    /* 
     public Serie readNome(String nome) throws Exception {
 
         if(nome.length()==0)
@@ -47,7 +48,8 @@ public class ArquivoSeries extends Arquivo<Serie> {
         else 
             return null;
     }
-
+    */
+    
     public Serie[] readNomeSerie(String nome) throws Exception {
         if(nome.length()==0)
             return null;
@@ -76,17 +78,23 @@ public class ArquivoSeries extends Arquivo<Serie> {
     }
 
     public boolean delete(String nome, int id) throws Exception {
+        ArquivoEpisodio arqEpisodios = new ArquivoEpisodio();
         ParNomeID pii =  indiceNome.read(ParNomeID.hash(nome));
+        
+        if (pii == null) {
+            return false; // Serie nao encontrada
+        }
+
         //verificar episodios vinculados a serie
         ArrayList<ParIdId> ids = indices.read(new ParIdId(id, -1));
-        if(ids.size() > 0 && pii != null){
-            for(ParIdId pID : ids) 
-              //chamar delete do crud de episodio
-              //excluir todos os episodio vinculados a serie
-              delete(pID.getId1());
-            return delete(pii.getId());
-          } 
-    
+        if(ids!= null){
+            //excluir todos os episodios
+            boolean deletados = arqEpisodios.deleteEpisodio(pii.getId());
+            //deletar a serie
+            if(deletados){
+                return delete(pii.getId());
+            }
+        } 
         return false;
     }
 
@@ -105,12 +113,25 @@ public class ArquivoSeries extends Arquivo<Serie> {
         return false;
     }
 
-    
+    // metodo para atualizar pelo id
+    public boolean update(int id) throws Exception {
+        if (!serieExiste(id))
+            throw new Exception("Erro: Não há série vinculada a esse ID");
+        
+        Serie serie = read(id); // na superclasse
+        
+        if (serie != null) {
+            return update(serie); 
+        }
+        
+        return false;
+    }
 
     //metodo para testar se ha serie vinculada ao id buscado
-    public boolean serieExiste(int id) throws Exception{
-        Serie s = read(id);   // na superclasse
-        if(s!=null) {
+    public static boolean serieExiste(int id) throws Exception{
+        ArquivoSeries arqSeries = new ArquivoSeries();
+        Serie s = arqSeries.read(id);   // na superclasse
+        if(s != null) {
             return true;
         }
         return false;
