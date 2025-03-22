@@ -1,20 +1,17 @@
 package modelo;
-import entidades.Episodio;
-import modelo.ArquivoSeries;
-
-import java.util.ArrayList;
-
 import aeds3.*;
+import entidades.Episodio;
+import java.util.ArrayList;
 
 //Ideia printar a avaliação da serie, que será a media das avaliações dos seus episodios
 
-public class ArquivoEpisodio extends Arquivo<Episodio> {
+public class ArquivoEpisodios extends Arquivo<Episodio> {
 
   Arquivo<Episodio> arqEpisodio;
   ArvoreBMais <ParIdId> indiceIdEpisodio_IdSerie;
   ArvoreBMais <ParTituloId> indiceNomeEpisodio;
 
-  public ArquivoEpisodio() throws Exception {
+  public ArquivoEpisodios() throws Exception {
     super("episodio", Episodio.class.getConstructor());
 
     indiceIdEpisodio_IdSerie = new ArvoreBMais<>(
@@ -36,7 +33,7 @@ public class ArquivoEpisodio extends Arquivo<Episodio> {
     // Metodo para verificar se a serie vinculada ao episodio existe 
     // **A ser implementado na classe serie**
 
-    if(serieExiste(e.getID_serie()) == false){
+    if(ArquivoSeries.serieExiste(e.getID_serie()) == false){
       throw new Exception("Episodio nao pode ser criado pois a serie vinculada não existe");
     }
 

@@ -76,7 +76,7 @@ public class ArquivoSeries extends Arquivo<Serie> {
     }
 
     public boolean delete(String nome, int id) throws Exception {
-        ArquivoEpisodio arqEpisodios = new ArquivoEpisodio();
+        ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
         ParNomeID pii =  indiceNome.read(ParNomeID.hash(nome));
         
         if (pii == null) {
