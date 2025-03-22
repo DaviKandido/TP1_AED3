@@ -127,7 +127,27 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
   }
 
 
+ 
+  public int avaliacaoMediaEpisodios(int id_serie) throws Exception{
+    
+    int soma = 0;
+    
+    // Metodo para verificar se a serie vinculada ao episodio existe ordem id_serie -1 é ao contrario?
+    ArrayList<ParIdId> pIds = indiceIdEpisodio_IdSerie.read(new ParIdId(id_serie, -1));
+    if(pIds.size() > 0){
+    Episodio[] episodios = new Episodio[pIds.size()];
+    int i = 0;
 
+    // Tive que criar um metodo para pegar o id do episodio
+    // pois o metodo read() da superclasse Arquivo não aceita perguntar kutova
+    for(ParIdId pID : pIds){
+        episodios[i++] = read(pID.getId_agregado());
+        soma += episodios[i-1].getAvaliacao();
+    }
+        return soma / episodios.length;
+    }else
+      return 0;
+}
 
 
 }

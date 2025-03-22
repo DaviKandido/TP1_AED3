@@ -1,9 +1,9 @@
 package visao;
 
+import entidades.Episodio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import entidades.Episodio;
 import modelo.ArquivoEpisodios;
 
 public class MenuEpisodios {
@@ -60,7 +60,7 @@ public class MenuEpisodios {
         System.out.println("\nInclusão de Episódio");
         String nome = "";
         int temporada = 0;
-        LocalDate dataLancamento = null;
+        LocalDate dataLancamento = LocalDate.now();
         int duracaoMinutos = 0;
         float avaliacao = 0F;
         boolean especial = false;
