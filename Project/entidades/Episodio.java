@@ -23,11 +23,11 @@ public class Episodio implements EntidadeArquivo {
     this("", 0, LocalDate.now(), 0, 0F, false, "", -1);
   }
   
-  private Episodio(String nome, int temporada, LocalDate dataLancamento, int duracaoMinutos, float avaliacao, boolean especial, String descricao, int id_serie) throws Exception{
+  public Episodio(String nome, int temporada, LocalDate dataLancamento, int duracaoMinutos, float avaliacao, boolean especial, String descricao, int id_serie) throws Exception{
     this(-1 , nome, temporada, dataLancamento, duracaoMinutos, avaliacao, especial, descricao, id_serie);
   }
 
-  private Episodio(int id, String nome, int temporada, LocalDate dataLancamento, int duracaoMinutos, float avaliacao, boolean especial, String descricao, int id_serie) throws Exception{
+  public Episodio(int id, String nome, int temporada, LocalDate dataLancamento, int duracaoMinutos, float avaliacao, boolean especial, String descricao, int id_serie) throws Exception{
     this.id = id;
     this.nome = nome;
     this.temporada = (short) temporada;
