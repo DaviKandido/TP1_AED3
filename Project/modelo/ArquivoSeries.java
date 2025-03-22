@@ -18,7 +18,7 @@ public class ArquivoSeries extends Arquivo<Serie> {
         indiceNomeSerie = new ArvoreBMais<>(
             ParNomeSerieId.class.getConstructor(), 
             5, 
-            "./dados/"+nomeEntidade+"/indiceNomeSerie.db");
+            "./dados/"+nomeEntidade+"/indiceNomeSerie.d.db");
     }
 
     @Override
@@ -56,9 +56,10 @@ public class ArquivoSeries extends Arquivo<Serie> {
 
     public boolean delete(String nome, int id) throws Exception {
         ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
+        
         Serie s = read(id); 
         //verificar se a serie existe
-        if(s != null && s.getID() == id){
+        if(s != null && s.getID() == id && s.getNome().equals(nome)){
             //verificar episodios vinculados a serie
             ArrayList<ParIdId> ids = indices.read(new ParIdId(id, -1));
             if(ids!= null){
