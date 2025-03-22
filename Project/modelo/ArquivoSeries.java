@@ -9,19 +9,11 @@ import aeds3.*;
 public class ArquivoSeries extends Arquivo<Serie> {
     
     Arquivo<Serie> arqSeries;
-    HashExtensivel<ParNomeID> indiceNome;
     ArvoreBMais<ParNomeSerieId> indiceNomeSerie;
     ArvoreBMais <ParIdId> indices;
 
     public ArquivoSeries() throws Exception {
         super("series", Serie.class.getConstructor());
-        
-        indiceNome = new HashExtensivel<>(
-            ParNomeID.class.getConstructor(),
-            4,
-            "./dados/"+nomeEntidade+"/indiceNome.d.db",
-            "./dados/"+nomeEntidade+"/indiceNome.c.db"
-            );
         
         indiceNomeSerie = new ArvoreBMais<>(
             ParNomeSerieId.class.getConstructor(), 
@@ -32,23 +24,10 @@ public class ArquivoSeries extends Arquivo<Serie> {
     @Override
     public int create(Serie s) throws Exception {
         int id = super.create(s);
-        indiceNome.create(new ParNomeID(s.getNome(), id));
         indiceNomeSerie.create(new ParNomeSerieId(s.getNome(), id));
         return id;
     }
  
-    public Serie readNome(String nome) throws Exception {
-
-        if(nome.length()==0)
-            return null;
-
-        ParNomeID pii = indiceNome.read(ParNomeID.hash(nome));
-        if(pii != null)
-            return read(pii.getId());    // na superclasse
-        else 
-            return null;
-    }
-
     public Serie[] readNomeSerie(String nome) throws Exception {
         if(nome.length()==0)
             return null;
@@ -70,30 +49,27 @@ public class ArquivoSeries extends Arquivo<Serie> {
         Serie s = read(id);   // na superclasse
         if(s!=null) {
             if(super.delete(id))
-                return indiceNome.delete(ParNomeID.hash(s.getNome()))
-                    && indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
+                return indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
         }
         return false;
     }
 
     public boolean delete(String nome, int id) throws Exception {
         ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
-        ParNomeID pii =  indiceNome.read(ParNomeID.hash(nome));
-        
-        if (pii == null) {
-            return false; // Serie nao encontrada
+        Serie s = read(id); 
+        //verificar se a serie existe
+        if(s != null && s.getID() == id){
+            //verificar episodios vinculados a serie
+            ArrayList<ParIdId> ids = indices.read(new ParIdId(id, -1));
+            if(ids!= null){
+                //excluir todos os episodios
+                boolean deletados = arqEpisodios.deleteEpisodioSerie(id);
+                //deletar a serie
+                if(deletados){
+                    return delete(id);
+                }
+            } 
         }
-
-        //verificar episodios vinculados a serie
-        ArrayList<ParIdId> ids = indices.read(new ParIdId(id, -1));
-        if(ids!= null){
-            //excluir todos os episodios
-            boolean deletados = arqEpisodios.deleteEpisodioSerie(pii.getId());
-            //deletar a serie
-            if(deletados){
-                return delete(pii.getId());
-            }
-        } 
         return false;
     }
 
@@ -103,8 +79,8 @@ public class ArquivoSeries extends Arquivo<Serie> {
         if(s!=null) {
             if(super.update(novaSerie)) {
                 if(!s.getNome().equals(novaSerie.getNome())) {
-                    indiceNome.delete(ParNomeID.hash(s.getNome()));
-                    indiceNome.create(new ParNomeID(novaSerie.getNome(), s.getID()));
+                    indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), s.getID()));
+                    indiceNomeSerie.create(new ParNomeSerieId(novaSerie.getNome(), s.getID()));
                 }
                 return true;
             }
@@ -135,4 +111,4 @@ public class ArquivoSeries extends Arquivo<Serie> {
         }
         return false;
     }
-} 
+}
