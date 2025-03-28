@@ -1,8 +1,9 @@
-
 package modelo;
-import aeds3.*;
 import entidades.Serie;
+
 import java.util.ArrayList;
+
+import aeds3.*;
 
 public class ArquivoSeries extends Arquivo<Serie> {
     
@@ -26,9 +27,10 @@ public class ArquivoSeries extends Arquivo<Serie> {
         return id;
     }
  
-    public Serie[] readNomeSerie(String nome) throws Exception {
+    public Serie[] readNome(String nome) throws Exception {
         if(nome.length()==0)
             return null;
+            
         ArrayList<ParNomeSerieId> ptis = indiceNomeSerie.read(new ParNomeSerieId(nome, -1));
         if(ptis.size()>0) {
             Serie[] series = new Serie[ptis.size()];
@@ -44,18 +46,11 @@ public class ArquivoSeries extends Arquivo<Serie> {
 
     @Override
     public boolean delete(int id) throws Exception {
-        ArquivoEpisodios arqEpisodios = new ArquivoEpisodios();
-
         Serie s = read(id);   // na superclasse
         if(s!=null) {
-            boolean deletados = arqEpisodios.deleteEpisodioSerie(id);
-            
-            if(deletados && super.delete(id)){
-                
+            if(super.delete(id))
                 return indiceNomeSerie.delete(new ParNomeSerieId(s.getNome(), id));
-            }
         }
-        
         return false;
     }
 
@@ -91,20 +86,6 @@ public class ArquivoSeries extends Arquivo<Serie> {
                 return true;
             }
         }
-        return false;
-    }
-
-    // metodo para atualizar pelo id
-    public boolean update(int id) throws Exception {
-        if (!serieExiste(id))
-            throw new Exception("Erro: Não há série vinculada a esse ID");
-        
-        Serie serie = read(id); // na superclasse
-        
-        if (serie != null) {
-            return update(serie); 
-        }
-        
         return false;
     }
 
