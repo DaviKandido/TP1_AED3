@@ -132,7 +132,7 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
 
 
  
-  public int avaliacaoMediaEpisodios(int id_serie) throws Exception{
+  public int avaliacaoMediaSerie(int id_serie) throws Exception{
     
     int soma = 0;
     
