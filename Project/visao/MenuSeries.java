@@ -137,10 +137,11 @@ public class MenuSeries {
             Serie[] series = arqSeries.readNome(nome);
             if (series != null && series.length > 0) {
                 System.out.println("Séries encontradas:");
-                for (Serie s : series) {
-                    if (s.getNome().toLowerCase().startsWith(nome.toLowerCase())) {
+                for (Serie s : series) 
+                {
+          
                         mostraSerie(s);
-                    }
+                    
                 }
             } else {
                 System.out.println("Nenhuma série encontrada com esse nome.");
@@ -235,6 +236,8 @@ public class MenuSeries {
 
     //Excluir Série pelo nome
     public void excluirSerie() throws Exception {
+
+       
         System.out.println("\nExclusão de Série");
         
         System.out.print("Nome da Série: ");
@@ -244,11 +247,12 @@ public class MenuSeries {
         try {
             Serie[] serie = arqSeries.readNome(nome);
             if (serie != null) {
-                for (int i=0; i < serie.length; i++) {
-                    if (serie[i].getNome().toLowerCase().startsWith(nome.toLowerCase())) {
+                for (int i=0; i < serie.length; i++) 
+                {
+                   
                         System.out.print(i + "- ");
                         mostraSerie(serie[i]);
-                    }
+                    
                 }
 
                 System.out.print("Digite o número da série a ser excluída: ");
@@ -265,18 +269,30 @@ public class MenuSeries {
                         return;
                     }
                 }
-                boolean excluido = arqSeries.delete(serie[num].getNome(), serie[num].getID());
+              
+              String Nomeserie = serie[num].getNome();
+              int id = -1;
+              id = serie[num].getID();
+              boolean excluido = false;
+
+              System.out.println(Nomeserie + " " + id);
+
+              if(Nomeserie != null && id != -1)
+              excluido = arqSeries.delete(Nomeserie, id);
+
                 if (excluido) {
                     System.out.println("Série excluída com sucesso.");
                 } else {
                     System.out.println("Erro ao excluir a série.");
                 }
+            
+                
             }
         } catch (Exception e) {
-            System.out.println("Erro ao excluir série.");
+            System.out.println("Erro ao excluir total série.");
         }
     }
-
+    
     //Mostrar Série
     public void mostraSerie(Serie serie) {
         if (serie != null) {
