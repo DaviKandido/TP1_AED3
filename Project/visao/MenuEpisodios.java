@@ -59,7 +59,7 @@ public class MenuEpisodios {
     }
 
     public void incluirEpisodio() {
-        System.out.println("\nInclusão de Episódio");
+        System.out.println("\nInclusão de Episódio: \n");
         String nome = "";
         int temporada = 0;
         LocalDate dataLancamento = LocalDate.now();
@@ -206,7 +206,7 @@ public class MenuEpisodios {
     }
 
     public void buscarEpisodio() {
-        System.out.println("\nBusca de episódio");
+        System.out.println("\nBusca de episódio: \n");
         System.out.print("\nDe qual serie deseja buscar o episodio? (Nome da serie): ");
         boolean dadosCorretos = false;
 
@@ -231,13 +231,19 @@ public class MenuEpisodios {
                         }else{
                             System.out.println("\nEpisódios da série " + series[num].getNome() + ": ");
                             Episodio[] episodios = arqEpisodios.readEpisodiosSerie(series[num].getID());
-                            for (Episodio ep : episodios) {
-                                mostraEpisodio(ep);
+                            if(episodios != null && episodios.length > 0){
+                                for (Episodio ep : episodios) {
+                                    mostraEpisodio(ep);
+                                    dadosCorretos = true;
+                                }
+                            }else{
+                                System.out.println("Nenhum episódio encontrado para esta série.");
                                 dadosCorretos = true;
                             }
                         }
                     } else {
                         System.err.println("Número inválido!");
+                        dadosCorretos = true;
                     }
 
                     console.nextLine(); // Limpar buffer
@@ -253,30 +259,60 @@ public class MenuEpisodios {
     }
 
     public void excluirEpisodio() {
-        System.out.println("\nExclusão de episódio");
-        System.out.print("\nID: ");
-        int id = console.nextInt();
+        System.out.println("\nExclusão de episódio: \n");
+        System.out.print("\nDe qual serie deseja excluir o episodio? (Nome da serie): ");
+        String nomeSerieVinculada = console.nextLine();
+        System.out.println();
 
         try {
-            Episodio episodio = arqEpisodios.read(id);
-            if (episodio != null) {
-                System.out.print("\nConfirma a exclusão do episódio? (S/N) ");
-                char resp = console.next().charAt(0);
-                console.nextLine();
-
-                if (resp == 'S' || resp == 's') {
-                    boolean excluido = arqEpisodios.delete(id);
-                    if (excluido) {
-                        System.out.println("Episódio excluído com sucesso.");
-                    } else {
-                        System.out.println("Erro ao excluir o episódio.");
-                    }
-                } else {
-                    System.out.println("Exclusão cancelada.");
+            Serie[] series = arqSeries.readNome(nomeSerieVinculada);
+            
+            if(series != null && series.length > 0) {
+                System.out.println("Séries encontradas: ");
+                for(int i = 0; i < series.length; i++){
+                    System.out.println("\t[" + i + "]");
+                    mostraSerie(series[i]);
                 }
-            } else {
-                System.out.println("Episódio não encontrado.");
+
+                System.out.print("\nDigite o número da série escolhida: ");
+                if(console.hasNextInt()){
+                    int num = console.nextInt();
+                    if(num < 0 || num > series.length) {
+                        System.err.println("Número inválido!");
+                    }else{
+                        System.out.println("\nEpisódios da série " + series[num].getNome() + ": ");
+                        Episodio[] episodio = arqEpisodios.readEpisodiosSerie(series[num].getID());
+
+                        for (int i = 0; i < episodio.length; i++) {
+                            System.out.println("\t[" + i + "]");
+                            mostraEpisodio(episodio[i]);
+                        }
+                        System.out.print("\nDigite o número do episódio a ser excluído: ");
+                        int num2 = console.nextInt();
+                        if(num2 < 0 || num2 > episodio.length){
+                            System.err.println("Número inválido!");
+                        }else{
+                            System.out.print("\nConfirma a exclusão do episódio? (S/N) ");
+                            char resp = console.next().charAt(0);
+                            console.nextLine(); // Limpar buffer
+                            if (resp == 'S' || resp == 's') {
+                                boolean excluido = arqEpisodios.delete(episodio[num2].getID());
+                                if (excluido) {
+                                    System.out.println("Episódio excluído com sucesso.");
+                                } else {
+                                    System.out.println("Erro ao excluir o episódio.");
+                                }
+                            } else {
+                                System.out.println("Exclusão cancelada.");
+                            }
+                        }
+                    }
+
+                }else{
+                    System.err.println("Número inválido!");
+                }
             }
+
         } catch (Exception e) {
             System.out.println("Erro do sistema. Não foi possível excluir o episódio! " + e.getMessage());
         }
