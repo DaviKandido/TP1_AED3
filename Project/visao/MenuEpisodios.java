@@ -405,9 +405,7 @@ public class MenuEpisodios {
     
     public void mostraEpisodio(Episodio episodio) {
         if (episodio != null) {
-            System.out.println("----------------------");
             System.out.printf("Nome.......: %s%n", episodio.getNome());
-            System.out.printf("Temporada..: %d%n", episodio.getTemporada());
             System.out.printf("Lançamento.: %s%n", episodio.getDataLancamento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             System.out.printf("Duração....: %d%n", episodio.getDuracaoMinutos());
             System.out.printf("Avaliação..: %s%n", episodio.getAvaliacao());
