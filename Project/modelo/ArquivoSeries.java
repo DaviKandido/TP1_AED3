@@ -1,4 +1,5 @@
 package modelo;
+import entidades.Episodio;
 import entidades.Serie;
 
 import java.util.ArrayList;
@@ -60,9 +61,16 @@ public class ArquivoSeries extends Arquivo<Serie> {
         Serie s = read(id); 
         //verificar se a serie existe
         if(s != null && s.getID() == id && s.getNome().equals(nome)){
+
+            System.out.println(s);
+           
             //verificar episodios vinculados a serie
-            ArrayList<ParIdId> ids = indices.read(new ParIdId(id, -1));
+           Episodio[] ids = arqEpisodios.readEpisodiosSerie(id); 
+          
+           //indices.readE(new ParIdId(id, -1));
+            
             if(ids!= null){
+                
                 //excluir todos os episodios
                 boolean deletados = arqEpisodios.deleteEpisodioSerie(id);
                 //deletar a serie
@@ -70,6 +78,9 @@ public class ArquivoSeries extends Arquivo<Serie> {
                     return delete(id);
                 }
             } 
+
+                return delete(id);
+            
         }
         return false;
     }
