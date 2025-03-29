@@ -1,3 +1,4 @@
+
 package visao;
 
 import entidades.Episodio;
@@ -6,7 +7,6 @@ import java.time.LocalDate;
 import java.util.Scanner;
 import modelo.ArquivoEpisodios;
 import modelo.ArquivoSeries;
-import visao.MenuEpisodios;
 
 public class MenuSeries {
     ArquivoSeries arqSeries = new ArquivoSeries();
@@ -41,7 +41,7 @@ public class MenuSeries {
 
             switch (opcao) {
                 case 1:
-                    incluirSerie();
+                    povoar();
                     break;
                 case 2:
                     buscarSerie();
@@ -143,11 +143,8 @@ public class MenuSeries {
             Serie[] series = arqSeries.readNome(nome);
             if (series != null && series.length > 0) {
                 System.out.println("Séries encontradas:");
-                for (Serie s : series) 
-                {
-          
-                        mostraSerie(s);
-                    
+                for (Serie s : series) {
+                    mostraSerie(s);
                 }
             } else {
                 System.out.println("Nenhuma série encontrada com esse nome.");
@@ -181,56 +178,62 @@ public class MenuSeries {
                 int num = console.nextInt();
                 console.nextLine();
 
-                //------------- Dados a serem atualizados ----------------//
-                System.out.print("Novo nome (ou Enter para manter): ");
-                String novoNome = console.nextLine();
-                if (!novoNome.isEmpty()) {
-                    serie[num].setNome(novoNome);
-                }
+                //testar se o numero digitado e' valido
+                if (num >= 0 && serie[num] != null) {
 
-                System.out.print("Novo ano de lançamento (ou Enter para manter): ");
-                String ano = console.nextLine();
-                if (!ano.isEmpty()) {
-                    LocalDate anoS = LocalDate.parse(ano + "-01-01"); // Apenas o ano
-                    serie[num].setAnoLancamento(anoS);
-                }
+                    //------------- Dados a serem atualizados ----------------//
+                    System.out.print("Novo nome (ou Enter para manter): ");
+                    String novoNome = console.nextLine();
+                    if (!novoNome.isEmpty()) {
+                        serie[num].setNome(novoNome);
+                    }
 
-                System.out.print("Nova sinopse (ou Enter para manter): ");
-                String novaSinopse = console.nextLine();
-                if (!novaSinopse.isEmpty()) {
-                    serie[num].setSinopse(novaSinopse);
-                }
+                    System.out.print("Novo ano de lançamento (ou Enter para manter): ");
+                    String ano = console.nextLine();
+                    if (!ano.isEmpty()) {
+                        LocalDate anoS = LocalDate.parse(ano + "-01-01"); // Apenas o ano
+                        serie[num].setAnoLancamento(anoS);
+                    }
 
-                System.out.print("Novo streaming (ou Enter para manter): ");
-                String novoStreaming = console.nextLine();
-                if (!novoStreaming.isEmpty()) {
-                    serie[num].setStreaming(novoStreaming);
-                }
+                    System.out.print("Nova sinopse (ou Enter para manter): ");
+                    String novaSinopse = console.nextLine();
+                    if (!novaSinopse.isEmpty()) {
+                        serie[num].setSinopse(novaSinopse);
+                    }
 
-                System.out.print("Novo genero (ou Enter para manter): ");
-                String novogenero = console.nextLine();
-                if (!novoStreaming.isEmpty()) {
-                    serie[num].setGenero(novogenero);
-                }
+                    System.out.print("Novo streaming (ou Enter para manter): ");
+                    String novoStreaming = console.nextLine();
+                    if (!novoStreaming.isEmpty()) {
+                        serie[num].setStreaming(novoStreaming);
+                    }
 
-                System.out.print("Nova classificação indicada (ou Enter para manter): ");
-                String novoclassind = console.nextLine();
-                if (!novoclassind.isEmpty()) {
-                    serie[num].setClassIndicativa(novoclassind);
-                }
+                    System.out.print("Novo genero (ou Enter para manter): ");
+                    String novogenero = console.nextLine();
+                    if (!novoStreaming.isEmpty()) {
+                        serie[num].setGenero(novogenero);
+                    }
 
-                System.out.print("\nConfirma as alterações? (S/N) ");
-                char resp = console.nextLine().charAt(0);
+                    System.out.print("Nova classificação indicada (ou Enter para manter): ");
+                    String novoclassind = console.nextLine();
+                    if (!novoclassind.isEmpty()) {
+                        serie[num].setClassIndicativa(novoclassind);
+                    }
 
-                if (resp == 'S' || resp == 's') {
-                    boolean alterado = arqSeries.update(serie[num]);
-                    if (alterado) {
-                        System.out.println("Série alterada com sucesso.");
+                    System.out.print("\nConfirma as alterações? (S/N) ");
+                    char resp = console.nextLine().charAt(0);
+
+                    if (resp == 'S' || resp == 's') {
+                        boolean alterado = arqSeries.update(serie[num]);
+                        if (alterado) {
+                            System.out.println("Série alterada com sucesso.");
+                        } else {
+                            System.out.println("Erro ao alterar a série.");
+                        }
                     } else {
-                        System.out.println("Erro ao alterar a série.");
+                        System.out.println("Alterações canceladas.");
                     }
                 } else {
-                    System.out.println("Alterações canceladas.");
+                    System.out.println("Não há serie associada a esse número.");
                 }
             } else {
                 System.out.println("Série não encontrada.");
@@ -242,10 +245,6 @@ public class MenuSeries {
 
     //Excluir Série pelo nome
     public void excluirSerie() throws Exception {
-
-       
-
-
         System.out.println("\nExclusão de Série");
         
         System.out.print("Nome da Série: ");
@@ -254,53 +253,46 @@ public class MenuSeries {
 
         try {
             Serie[] serie = arqSeries.readNome(nome);
-            if (serie != null) {
-                for (int i=0; i < serie.length; i++) 
-                {
-                   
-                        System.out.print(i + "- ");
-                        mostraSerie(serie[i]);
-                    
+            if (serie != null && serie.length > 0) {
+                for (int i=0; i < serie.length; i++) {
+                    System.out.print(i + "- ");
+                    mostraSerie(serie[i]);
                 }
 
                 System.out.print("Digite o número da série a ser excluída: ");
                 int num = console.nextInt();
                 console.nextLine();
-                System.out.println();
 
-                Episodio[] episodios = arqEpisodios.readEpisodiosSerie(serie[num].getID());
-                if (episodios != null && episodios.length > 0) {
-                    System.out.print("Essa série possui episódios vinculados, deseja excluir mesmo assim? (S/N) ");
+                //testar se o numero digitado e' valido
+                if (num >= 0 && serie[num] != null) {
+                    Episodio[] episodios = arqEpisodios.readEpisodiosSerie(serie[num].getID());
+                    if (episodios != null) {
+                        System.out.print("Essa série possui episódios vinculados, deseja excluir mesmo assim? (S/N) ");
+                    } else {
+                        System.out.print("Tem certeza que deseja excluir essa série? (S/N) ");
+                    }
                     char resposta = console.nextLine().charAt(0);
                     if (resposta != 'S' && resposta != 's') {
                         System.out.println("A série não foi excluída.");
                         return;
                     }
-                }
-              
-              String Nomeserie = serie[num].getNome();
-              int id = -1;
-              id = serie[num].getID();
-              boolean excluido = false;
-
-              System.out.println(Nomeserie + " " + id);
-
-              if(Nomeserie != null && id != -1)
-              excluido = arqSeries.delete(Nomeserie, id);
-
-                if (excluido) {
-                    System.out.println("Série excluída com sucesso.");
+                    
+                    boolean excluido = arqSeries.delete(serie[num].getID());
+                    if (excluido) {
+                        System.out.println("Série excluída com sucesso.");
+                    } else {
+                        System.out.println("Erro ao excluir a série.");
+                    }
                 } else {
-                    System.out.println("Erro ao excluir a série.");
+                    System.out.println("Não há serie associada a esse número.");
                 }
-            
-                
+            } else {
+                System.out.println("Série não encontrada.");
             }
         } catch (Exception e) {
-            System.out.println("Erro ao excluir total série.");
+            System.out.println("Erro ao excluir série.");
         }
     }
-    
 
     public void mostrarEpSerie() {
         System.out.println("\nBusca de episódio:");
@@ -374,19 +366,17 @@ public class MenuSeries {
         }
     }
 
-        public void povoar() throws Exception {
-      
-                arqSeries.create(new Serie( "Breaking Bad", LocalDate.of(2008, 1, 20), "Um professor de química vira traficante de metanfetamina.", "Netflix", "Drama/Crime", "18+"));
-                arqSeries.create(new Serie( "Stranger Things", LocalDate.of(2016, 7, 15), "Crianças descobrem segredos sobrenaturais em sua cidade.", "Netflix", "Ficção Científica/Terror", "14+"));
-                arqSeries.create(new Serie( "Game of Thrones", LocalDate.of(2011, 4, 17), "Famílias nobres lutam pelo controle do trono de ferro.", "HBO Max", "Fantasia/Drama", "18+"));
-                arqSeries.create(new Serie( "The Witcher", LocalDate.of(2019, 12, 20), "Geralt de Rívia enfrenta monstros e conflitos políticos.", "Netflix", "Fantasia/Ação", "16+"));
-                arqSeries.create(new Serie( "Dark", LocalDate.of(2017, 12, 1), "Viagens no tempo revelam segredos sombrios de uma cidade.", "Netflix", "Ficção Científica/Suspense", "16+"));
-                arqSeries.create(new Serie("The Boys", LocalDate.of(2019, 7, 26), "Super-heróis corruptos são combatidos por um grupo rebelde.", "Prime Video", "Ação/Drama", "18+"));
-                arqSeries.create(new Serie( "Peaky Blinders", LocalDate.of(2013, 9, 12), "Gangue britânica liderada por Thomas Shelby.", "Netflix", "Crime/Drama", "16+"));
-                arqSeries.create(new Serie( "The Mandalorian", LocalDate.of(2019, 11, 12), "Caçador de recompensas protege uma criança misteriosa.", "Disney+", "Ficção Científica/Aventura", "12+"));
-                arqSeries.create(new Serie( "House of the Dragon", LocalDate.of(2022, 8, 21), "A guerra civil da família Targaryen pelo trono de ferro.", "HBO Max", "Fantasia/Drama", "18+"));
-                arqSeries.create(new Serie( "Loki", LocalDate.of(2021, 6, 9), "O deus da trapaça embarca em viagens pelo multiverso.", "Disney+", "Ação/Ficção Científica", "12+"));
+    public void povoar() throws Exception {
+            arqSeries.create(new Serie( "Breaking Bad", LocalDate.of(2008, 1, 20), "Um professor de química vira traficante de metanfetamina.", "Netflix", "Drama/Crime", "18+"));
+            arqSeries.create(new Serie( "Stranger Things", LocalDate.of(2016, 7, 15), "Crianças descobrem segredos sobrenaturais em sua cidade.", "Netflix", "Ficção Científica/Terror", "14+"));
+            arqSeries.create(new Serie( "Game of Thrones", LocalDate.of(2011, 4, 17), "Famílias nobres lutam pelo controle do trono de ferro.", "HBO Max", "Fantasia/Drama", "18+"));
+            arqSeries.create(new Serie( "The Witcher", LocalDate.of(2019, 12, 20), "Geralt de Rívia enfrenta monstros e conflitos políticos.", "Netflix", "Fantasia/Ação", "16+"));
+            arqSeries.create(new Serie( "Dark", LocalDate.of(2017, 12, 1), "Viagens no tempo revelam segredos sombrios de uma cidade.", "Netflix", "Ficção Científica/Suspense", "16+"));
+            arqSeries.create(new Serie("The Boys", LocalDate.of(2019, 7, 26), "Super-heróis corruptos são combatidos por um grupo rebelde.", "Prime Video", "Ação/Drama", "18+"));
+            arqSeries.create(new Serie( "Peaky Blinders", LocalDate.of(2013, 9, 12), "Gangue britânica liderada por Thomas Shelby.", "Netflix", "Crime/Drama", "16+"));
+            arqSeries.create(new Serie( "The Mandalorian", LocalDate.of(2019, 11, 12), "Caçador de recompensas protege uma criança misteriosa.", "Disney+", "Ficção Científica/Aventura", "12+"));
+            arqSeries.create(new Serie( "House of the Dragon", LocalDate.of(2022, 8, 21), "A guerra civil da família Targaryen pelo trono de ferro.", "HBO Max", "Fantasia/Drama", "18+"));
+            arqSeries.create(new Serie( "Loki", LocalDate.of(2021, 6, 9), "O deus da trapaça embarca em viagens pelo multiverso.", "Disney+", "Ação/Ficção Científica", "12+"));
 
-        }
-
+    }
 }
