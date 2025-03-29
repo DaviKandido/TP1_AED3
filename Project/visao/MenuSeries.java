@@ -1,11 +1,11 @@
 package visao;
 
+import entidades.Episodio;
+import entidades.Serie;
 import java.time.LocalDate;
 import java.util.Scanner;
-import entidades.Serie;
-import entidades.Episodio;
-import modelo.ArquivoSeries;
 import modelo.ArquivoEpisodios;
+import modelo.ArquivoSeries;
 
 public class MenuSeries {
     ArquivoSeries arqSeries = new ArquivoSeries();
@@ -290,5 +290,20 @@ public class MenuSeries {
             System.out.println("----------------------");
         }
     }
+
+        public void povoar() throws Exception {
+      
+                arqSeries.create(new Serie( "Breaking Bad", LocalDate.of(2008, 1, 20), "Um professor de química vira traficante de metanfetamina.", "Netflix", "Drama/Crime", "18+"));
+                arqSeries.create(new Serie( "Stranger Things", LocalDate.of(2016, 7, 15), "Crianças descobrem segredos sobrenaturais em sua cidade.", "Netflix", "Ficção Científica/Terror", "14+"));
+                arqSeries.create(new Serie( "Game of Thrones", LocalDate.of(2011, 4, 17), "Famílias nobres lutam pelo controle do trono de ferro.", "HBO Max", "Fantasia/Drama", "18+"));
+                arqSeries.create(new Serie( "The Witcher", LocalDate.of(2019, 12, 20), "Geralt de Rívia enfrenta monstros e conflitos políticos.", "Netflix", "Fantasia/Ação", "16+"));
+                arqSeries.create(new Serie( "Dark", LocalDate.of(2017, 12, 1), "Viagens no tempo revelam segredos sombrios de uma cidade.", "Netflix", "Ficção Científica/Suspense", "16+"));
+                arqSeries.create(new Serie("The Boys", LocalDate.of(2019, 7, 26), "Super-heróis corruptos são combatidos por um grupo rebelde.", "Prime Video", "Ação/Drama", "18+"));
+                arqSeries.create(new Serie( "Peaky Blinders", LocalDate.of(2013, 9, 12), "Gangue britânica liderada por Thomas Shelby.", "Netflix", "Crime/Drama", "16+"));
+                arqSeries.create(new Serie( "The Mandalorian", LocalDate.of(2019, 11, 12), "Caçador de recompensas protege uma criança misteriosa.", "Disney+", "Ficção Científica/Aventura", "12+"));
+                arqSeries.create(new Serie( "House of the Dragon", LocalDate.of(2022, 8, 21), "A guerra civil da família Targaryen pelo trono de ferro.", "HBO Max", "Fantasia/Drama", "18+"));
+                arqSeries.create(new Serie( "Loki", LocalDate.of(2021, 6, 9), "O deus da trapaça embarca em viagens pelo multiverso.", "Disney+", "Ação/Ficção Científica", "12+"));
+
+        }
 
 }
