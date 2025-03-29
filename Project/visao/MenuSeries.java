@@ -317,7 +317,7 @@ public class MenuSeries {
                 if (series != null && series.length > 0) {
                     System.out.println("Séries encontradas:");
                     for (int i = 0; i < series.length; i++) {
-                        System.out.print("[" + "i" + "] ");
+                        System.out.print("[" + i + "] ");
                         mostraSerie(series[i]);
                     }
                     
