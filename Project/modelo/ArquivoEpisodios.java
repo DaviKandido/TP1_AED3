@@ -60,6 +60,30 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
     }else
       return null;
   }
+
+  public Episodio[] readNomeEpisodioPorSerie(String nome, int id_serie) throws Exception{
+    if(nome.length() == 0)
+      return null;
+
+    ArrayList<ParTituloId> ptis = indiceNomeEpisodio.read(new ParTituloId(nome, -1));
+    if(ptis.size() > 0){
+      Episodio[] episodios = new Episodio[ptis.size()];
+      int i = 0;
+      for(ParTituloId pti: ptis)
+        episodios[i++] = read(pti.getId());
+
+      ArrayList<Episodio> episodiosSerie = new ArrayList<>();
+
+      // Verifica se o episodio pertence a serie
+      for(Episodio e : episodios){
+        if(e.getID_serie() == id_serie)
+          episodiosSerie.add(e);
+      }
+
+      return episodiosSerie.toArray(new Episodio[episodiosSerie.size()]);
+    }else
+      return null;
+  }
   
   public Episodio[] readEpisodiosSerie(int id_serie) throws Exception{
     

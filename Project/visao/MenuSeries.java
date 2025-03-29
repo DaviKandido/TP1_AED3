@@ -236,8 +236,6 @@ public class MenuSeries {
 
     //Excluir Série pelo nome
     public void excluirSerie() throws Exception {
-
-       
         System.out.println("\nExclusão de Série");
         
         System.out.print("Nome da Série: ");
