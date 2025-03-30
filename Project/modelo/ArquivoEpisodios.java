@@ -137,15 +137,11 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
         if(!e.getNome().equals(novoEpisodio.getNome())){
           indiceNomeEpisodio.delete(new ParTituloId(e.getNome(), e.getID()));
           indiceNomeEpisodio.create(new ParTituloId(novoEpisodio.getNome(), e.getID()));
-        } else {
-          throw new Exception("Episodio não pode ser atualizado pois ouve erro no cadastro do novo nome");
         }
 
         if(e.getID_serie() != novoEpisodio.getID_serie()){
           indiceIdEpisodio_IdSerie.delete(new ParIdId(e.getID_serie(), e.getID()));
           indiceIdEpisodio_IdSerie.create(new ParIdId(novoEpisodio.getID_serie(), e.getID()));
-        }else {
-          throw new Exception("Episodio não pode ser atualizado pois a serie vinculada não existe");
         }
 
         return true;
@@ -156,9 +152,9 @@ public class ArquivoEpisodios extends Arquivo<Episodio> {
 
 
  
-  public int avaliacaoMediaSerie(int id_serie) throws Exception{
+  public float avaliacaoMediaSerie(int id_serie) throws Exception{
     
-    int soma = 0;
+    float soma = 0;
     
     // Metodo para verificar se a serie vinculada ao episodio existe ordem id_serie -1 é ao contrario?
     ArrayList<ParIdId> pIds = indiceIdEpisodio_IdSerie.read(new ParIdId(id_serie, -1));

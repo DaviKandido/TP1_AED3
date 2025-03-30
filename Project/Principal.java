@@ -12,7 +12,7 @@ public class Principal {
             int opcao;
             do {
 
-                System.out.println("PUCFlix 1.0");
+                System.out.println("PUCFlix 2.0");
                 System.out.println( "-----------");
                 System.out.println("> Início");
                 System.out.println("1 - Series");

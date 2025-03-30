@@ -22,7 +22,7 @@ public class MenuSeries {
     public void menu() throws Exception {
         int opcao;
         do {
-            System.out.println("\n\nPUCFlix 1.0");
+            System.out.println("\n\nPUCFlix 2.0");
             System.out.println("-----------");
             System.out.println("> Início > Séries");
             System.out.println("\n1) Incluir");
@@ -354,15 +354,21 @@ public class MenuSeries {
     }
     //Mostrar Série
     public void mostraSerie(Serie serie) {
-        if (serie != null) {
-            System.out.println("----------------------");
-            System.out.printf("Nome....: %s%n", serie.getNome());
-            System.out.printf("Ano lançamento: %d%n", serie.getAnoLancamento().getYear());
-            System.out.printf("Sinopse....: %s%n", serie.getSinopse());
-            System.out.printf("Streaming.....: %s%n", serie.getStreaming());
-            System.out.printf("Gênero.....: %s%n", serie.getGenero());
-            System.out.printf("Classificação Indicativa.....: %s%n", serie.getClassIndicativa());
-            System.out.println("----------------------");
+        try{
+            if (serie != null) {
+                System.out.println("----------------------");
+                System.out.printf("Nome....: %s%n", serie.getNome());
+                System.out.printf("Ano lançamento: %d%n", serie.getAnoLancamento().getYear());
+                System.out.printf("Sinopse....: %s%n", serie.getSinopse());
+                System.out.printf("Streaming.....: %s%n", serie.getStreaming());
+                System.out.printf("Gênero.....: %s%n", serie.getGenero());
+                System.out.printf("Avaliação Media......: %.2f%n", arqEpisodios.avaliacaoMediaSerie(serie.getID()));
+
+                System.out.printf("Classificação Indicativa.....: %s%n", serie.getClassIndicativa());
+                System.out.println("----------------------");
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao mostrar série: " + e.getMessage());
         }
     }
 
