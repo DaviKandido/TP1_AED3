@@ -38,7 +38,7 @@ Este projeto é uma aplicação desenvolvida em Java chamada PUCFlix 2.0, que si
        	   └── indiceIdEpisodios_IdSerie.db
        	   └── indiceNomeEpisodios.db
    	└── 📁series
-        	  └── indiceDireito.c.db
+           └── indiceDireito.c.db
        	   └── indiceDireito.d.db
        	   └── indiceNomeSerie.d.db
        	   └── series.db
