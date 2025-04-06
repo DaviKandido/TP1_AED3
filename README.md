@@ -20,7 +20,7 @@ Este projeto é uma aplicação desenvolvida em Java chamada PUCFlix 2.0, que si
 ```java
 └── 📁Project
    └── 📁aeds3
-   	└── Arquivo.java //(Métodos: read, create, delete, update, addDeleted, getDeleted)**
+   	└── Arquivo.java //(Métodos: read, create, delete, update, addDeleted, getDeleted)
    	└── ArvoreBMais.java //(Métodos: empty, read, create, delete, update, print)
    	└── Pagina.java //(Métodos: toByteArray, fromByteArray)
    	└── EntidadeArquivo.java //(Interface: setID, getID, toByteArray, fromByteArray)
