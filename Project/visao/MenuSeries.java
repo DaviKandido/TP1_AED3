@@ -41,7 +41,7 @@ public class MenuSeries {
 
             switch (opcao) {
                 case 1:
-                    povoar();
+                    incluirSerie();
                     break;
                 case 2:
                     buscarSerie();
@@ -168,10 +168,8 @@ public class MenuSeries {
             if (serie != null) {
                 
                 for (int i=0; i < serie.length; i++) {
-                    if (serie[i].getNome().toLowerCase().startsWith(nome.toLowerCase())) {
-                        System.out.print(i + "- ");
-                        mostraSerie(serie[i]);
-                    }
+                    System.out.println("\t[" + i + "]");
+                    mostraSerie(serie[i]);
                 }
 
                 System.out.print("Digite o número da série a ser atualizada: ");
@@ -255,7 +253,7 @@ public class MenuSeries {
             Serie[] serie = arqSeries.readNome(nome);
             if (serie != null && serie.length > 0) {
                 for (int i=0; i < serie.length; i++) {
-                    System.out.print(i + "- ");
+                    System.out.println("\t[" + i + "]");
                     mostraSerie(serie[i]);
                 }
 
