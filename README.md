@@ -18,7 +18,6 @@ Este projeto é uma aplicação desenvolvida em Java chamada PUCFlix 2.0, que si
 
 
 ```java
-
 └── 📁Project
    └── 📁aeds3
    	└── Arquivo.java //(Métodos: read, create, delete, update, addDeleted, getDeleted)**
@@ -60,7 +59,6 @@ Este projeto é uma aplicação desenvolvida em Java chamada PUCFlix 2.0, que si
 ## Relato de experiências:
 
 ```
-
 Todos os requisitos foram implementados ?  
  - Sim
 
